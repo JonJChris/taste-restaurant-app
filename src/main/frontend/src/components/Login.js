@@ -21,8 +21,8 @@ const Login = () => {
     }
 
     const loginCustomer1 = () => {
-
-        const reqUrl = 'http://localhost:8080/customers/login';
+        const origin = window.location.origin;
+        const reqUrl = `${origin}/customers/login';`
         const reqBody = {
             ...loginForm
         }
@@ -78,7 +78,9 @@ const Login = () => {
 
 
     const loginCustomer = async () => {
-        const reqUrl = 'http://localhost:8080/customers/login';
+        const origin = window.location.origin;
+        
+        const reqUrl = `${origin}/customers/login`;
         const reqBody = {
             ...loginForm
         }

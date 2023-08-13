@@ -8,7 +8,8 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/customers/${userData.currentUserId}/orders`)
+    const origin = window.location.origin;
+    fetch(`${origin}/customers/${userData.currentUserId}/orders`)
       .then(resp => resp.json())
       .then(orders => {
         setOrders(orders)

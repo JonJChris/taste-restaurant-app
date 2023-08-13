@@ -37,7 +37,8 @@ const CarteviewAndPayment = () => {
 
 
     const reqBody = JSON.stringify(requestBody);
-    const requestUrl = `http://localhost:8080/customers/${userStore.currentUserId}/orders`
+    const origin = window.location.origin;
+    const requestUrl = `${origin}/customers/${userStore.currentUserId}/orders`
 
     try {
       const resp = await fetch(requestUrl, {

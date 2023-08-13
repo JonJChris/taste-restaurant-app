@@ -39,14 +39,15 @@ const MenuLayout = () => {
     } else {
       navigate('/')
     }
+    const origin = window.location.origin;
 
-    axios.get('http://localhost:8080/productCategory')
+    axios.get(`${origin}/productCategory`)
       .then(resp => {
         showHideModalContent(false, '');
         dispatch(staticDataActions.refreshFoodCategory({ foodCategory: resp.data }));
       }).catch(error => showHideModalContent(true, "Application not avaialble due to network error"));
 
-    axios.get('http://localhost:8080/products')
+    axios.get(`${origin}/products`)
       .then(resp => {
         showHideModalContent(false, '');
         dispatch(staticDataActions.refreshFoodItemsGroup({ foodItemsGroup: resp.data }));

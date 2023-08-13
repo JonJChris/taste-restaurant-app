@@ -39,11 +39,11 @@ const CartSelectAddress = () => {
 
   useEffect(() => {
     context.setCurrentCartPage('cart-select-address')
-
+    const origin = window.location.origin;
     const fetchCustomerAddress = async () => {
       const customerId = userData.currentUserId;
       try {
-        const resp = await axios.get(`http://localhost:8080/customers/${customerId}/addresses`);
+        const resp = await axios.get(`${origin}/customers/${customerId}/addresses`);
         const customerAddress = await resp.data;
         setAddresses(customerAddress);
 
@@ -65,8 +65,8 @@ const CartSelectAddress = () => {
   }
 
   useEffect(() => {
-
-    fetch(`http://localhost:8080/customers/${userData.currentUserId}/addresses`)
+    const origin = window.location.origin;
+    fetch(`${origin}/customers/${userData.currentUserId}/addresses`)
       .then(resp => resp.json())
       .then(addresses => {
         setAddresses(addresses)
@@ -81,7 +81,9 @@ const CartSelectAddress = () => {
 
   const formSubmitCallback = (formData) => {
 
-    const reqUrl = `http://localhost:8080/customers/${userData.currentUserId}/addresses`
+    const origin = window.location.origin;
+
+    const reqUrl = `${origin}/customers/${userData.currentUserId}/addresses`
     const reqBody = JSON.stringify(formData);
     fetch(reqUrl, {
       method: 'post',

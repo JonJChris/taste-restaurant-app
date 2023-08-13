@@ -10,8 +10,9 @@ const AccountOrderDetails = () => {
   const { orderId } = useParams();
 
   useEffect(() => {
+    const origin = window.location.origin;
     const fetchData = async () => {
-      const reqUrl = `http://localhost:8080/customers/${userStore.currentUserId}/orders/${orderId}`
+      const reqUrl = `${origin}/customers/${userStore.currentUserId}/orders/${orderId}`
 
       try {
         const resp = await fetch(reqUrl);

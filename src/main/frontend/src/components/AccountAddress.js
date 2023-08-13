@@ -13,8 +13,9 @@ const AccountAddress = () => {
   }
 
   useEffect(() => {
+    const origin = window.location.origin;
 
-    fetch(`http://localhost:8080/customers/${userData.currentUserId}/addresses`)
+    fetch(`${origin}/customers/${userData.currentUserId}/addresses`)
       .then(resp => resp.json())
       .then(addresses => {
         setAddresses(addresses)
@@ -27,8 +28,8 @@ const AccountAddress = () => {
   }, []);
 
   const formSubmitCallback = (formData) => {
-
-    const reqUrl = `http://localhost:8080/customers/${userData.currentUserId}/addresses`
+    const origin = window.location.origin;
+    const reqUrl = `${origin}/customers/${userData.currentUserId}/addresses`
     const reqBody = JSON.stringify(formData);
     fetch(reqUrl, {
       method: 'post',
