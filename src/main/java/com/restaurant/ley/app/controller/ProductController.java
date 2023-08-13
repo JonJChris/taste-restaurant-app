@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("products")
-@CrossOrigin(origins = {"http://localhost","http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost","http://localhost:3000, 'https://taste-restaurant.onrender.com"})
 public class ProductController {
 
     @Autowired

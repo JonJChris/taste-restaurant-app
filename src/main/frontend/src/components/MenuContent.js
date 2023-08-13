@@ -22,21 +22,21 @@ const MenuContent = (props) => {
     return (
       <article  >
         {!cartItems[foodItem.productId] &&
-          <button className='btn btn-primary text-nowrap text-white'
+          <button className='btn btn-primary text-nowrap text-white m-2 mb-0'
             name={foodItem.productId} onClick={() => addItemToCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>Add to cart</button>}
 
         {
           cartItems[foodItem.productId] &&
           <span className='row'>
-            <div className='col'>
-              <div className='row p-2 pb-0'>
-                <button className='btn btn-primary col-1 ' name={foodItem.productId}
+            <div className='col-sm-2 m-2 mb-0'>
+              <div className='row'>
+                <button className='btn btn-primary col' name={foodItem.productId}
                   onClick={() => addItemToCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>+</button>
 
 
-                <p className='food-item-count text-primary text-sm col-1'>{cartItems[foodItem.productId].productQuantity}</p>
+                <p className='food-item-count text-primary text-sm col'>{cartItems[foodItem.productId].productQuantity}</p>
 
-                <button className='btn btn-primary col-1' name={foodItem.productId}
+                <button className='btn btn-primary col' name={foodItem.productId}
                   onClick={() => removeItemFromCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>-</button>
               </div>
 

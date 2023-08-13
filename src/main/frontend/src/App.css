@@ -43,9 +43,10 @@ html,body{
   height: 100%;
   }
 .btn{
-    height: 30px;
-    line-height: 15px;
+    height: 25px;
+    line-height: 12px;
     font-size: 12px;
+    max-height: 25px;
   }
 .modal-box{
   border-radius: 15px;

@@ -8,7 +8,7 @@ const Login = () => {
     const [loginForm, setLoginForm] = useState({ username: "", password: "" });
     const dispatch = useDispatch();
     const [showHint, setShowHint] = useState(false)
-    const [erroMsg, setErrorMsg] = useState('');
+    const [errMsg, setErrMsg] = useState('');
     const navigate = useNavigate();
     const handleChange = (evt) => {
         setLoginForm((prevState) => {
@@ -19,6 +19,64 @@ const Login = () => {
 
         });
     }
+
+    const loginCustomer1 = () => {
+
+        const reqUrl = 'http://localhost:8080/customers/login';
+        const reqBody = {
+            ...loginForm
+        }
+
+
+        fetch(reqUrl, {
+            method: 'post',
+            body: JSON.stringify(reqBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+                if (!res.ok) {
+                    return res.json().then(
+                        text => { 
+                            console.log(text.errorMessage);
+                            setErrMsg(text.errorMessage);
+                            throw new Error(text) 
+                        }
+                    )
+                }
+                else {
+
+
+                    const loginData = res.json();
+
+                    if (loginData) {
+                        console.log('loginData : '+loginData);
+                        const userData = {
+                            currentUserId: loginData.userId,
+                            currentUserName: loginData.username,
+                            currentUserFirstName: loginData.firstName,
+                            currentUserLastName: loginData.lastName,
+                            userLoggedId: true
+                        }
+
+                        dispatch(userDataActions.loginUser(userData));
+                        navigate('/');
+                    }
+                }
+            })
+            .catch(err => {
+                console.log('caught it!' + errMsg, err);
+                console.log('caught it!', err[0]);
+                // setErrorMsg(Object.keys(err));
+                // setErrMsg(JSON.stringify(err));
+            });
+
+    }
+
+
+
+
+
     const loginCustomer = async () => {
         const reqUrl = 'http://localhost:8080/customers/login';
         const reqBody = {
@@ -35,12 +93,18 @@ const Login = () => {
                 }
             });
 
-            const respStatus = resp.status;
 
-            loginData = await resp.json();
+            if (!resp.ok) {
+                const err =  await resp.json();
+                console.log(err.errorMessage);
+                setErrMsg(err.errorMessage);
+                throw new Error(err) 
+            }
 
-            if (respStatus === 200 && loginData) {
-                setErrorMsg('');
+           const loginData = await resp.json();
+
+            if (loginData) {
+                setErrMsg('');
                 const userData = {
                     currentUserId: loginData.userId,
                     currentUserName: loginData.username,
@@ -49,15 +113,15 @@ const Login = () => {
                     userLoggedId: true
                 }
 
-                console.log("::: "+loginData);
+                console.log("::: " + loginData);
                 dispatch(userDataActions.loginUser(userData));
                 navigate('/');
             } else {
-                setErrorMsg('Invalid username or password');
+                setErrMsg('Invalid username or password');
             }
 
         } catch (error) {
-            console.log('error : ' +error);
+            console.log('error : ' + error);
         }
 
     }
@@ -86,7 +150,7 @@ const Login = () => {
                             <input className='form-control' type='password' name="password" onChange={handleChange} value={loginForm.password} placeholder='Enter your password' required={true} />
                         </div>
                         <div className='button-group p-0 text-danger' style={{ minHeight: '30px' }}>
-                            <p>{erroMsg}</p>
+                            <p>{errMsg}</p>
                         </div>
                         <div className='button-group row'>
                             <button type="submit" name="login" className="col-2 m-2 btn btn-primary">Login</button>
