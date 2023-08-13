@@ -7,7 +7,7 @@ const AccountAddress = () => {
   const [addresses, setAddresses] = useState();
   const userData = useSelector(state => state.userData)
   const [showForm, setShowForm] = useState(false);
-  
+
   const showAddressForm = (showform) => {
     setShowForm(showform)
   }
@@ -18,7 +18,6 @@ const AccountAddress = () => {
       .then(resp => resp.json())
       .then(addresses => {
         setAddresses(addresses)
-        console.log(addresses)
       })
       .catch(error => new Error({
         message: error.response,
@@ -27,37 +26,39 @@ const AccountAddress = () => {
 
   }, []);
 
-const formSubmitCallback = (formData) => {
+  const formSubmitCallback = (formData) => {
 
-  const reqUrl = `http://localhost:8080/customers/${userData.currentUserId}/addresses`
-  const reqBody = JSON.stringify(formData);
-  fetch(reqUrl, {
-    method:'post',
-    body: reqBody,
-    headers: {
-      'Content-type': 'application/json'
-    }
-  })
-  .then(resp => resp.json())
-  .then(data => {
-    showAddressForm(false);
-    setAddresses(data);
-    
-  })
-  .catch(error => console.log("Some error occured : "+JSON.stringify(error)));
-}
+    const reqUrl = `http://localhost:8080/customers/${userData.currentUserId}/addresses`
+    const reqBody = JSON.stringify(formData);
+    fetch(reqUrl, {
+      method: 'post',
+      body: reqBody,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        showAddressForm(false);
+        setAddresses(data);
+
+      })
+      .catch(error =>
+        console.log("Some error occured : " + JSON.stringify(error))
+      );
+  }
   return (
     <div className='container-fluid menu-list-container overflow-auto vh-100 pt-3 pl-2'>
       {
         addresses && addresses.map(address => (
-            <AddressSecton address={address}  />
+          <AddressSecton address={address} />
         ))
       }
       <button className='btn btn-primary' onClick={() => setShowForm(true)} disabled={showForm} >Add New Address</button>
 
 
       <div style={showForm ? { display: '' } : { display: 'none' }}>
-         <AddressForm formSubmitCallback={formSubmitCallback} showAddressForm={showAddressForm} />
+        <AddressForm formSubmitCallback={formSubmitCallback} showAddressForm={showAddressForm} />
       </div>
 
     </div>

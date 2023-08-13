@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const CartSidebar = ( props ) => {
   
-  console.log(props);
-  
+   
   return (
 
     <div className='container-fluid d-flex flex-column p-0 '>
@@ -30,9 +29,3 @@ const CartSidebar = ( props ) => {
 }
 
 export default CartSidebar
-
-/**
- * 
- *           <div className="flex-shrink-0 p-4 text-white bg-dark ">
-            <ul className="nav nav-pills flex-column mb-auto">
- */

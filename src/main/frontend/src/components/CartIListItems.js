@@ -60,13 +60,7 @@ const CartListItems = () => {
               </div>
             </div>
           </div>
-
-
-
-
-
         </div>
-
       </div>
 
     </div>

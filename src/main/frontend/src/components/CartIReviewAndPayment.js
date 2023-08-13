@@ -9,10 +9,10 @@ import AddressSecton from './AddressSecton';
 const CarteviewAndPayment = () => {
   const cartStore = useSelector(state => state.cartData);
   const userStore = useSelector(state => state.userData);
-  const [paymentText, setPaymentText] = useState();
   const context = useOutletContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [paymentText, setPaymentText] = useState();
 
 
   const placeOrder = async () => {
@@ -39,8 +39,6 @@ const CarteviewAndPayment = () => {
     const reqBody = JSON.stringify(requestBody);
     const requestUrl = `http://localhost:8080/customers/${userStore.currentUserId}/orders`
 
-    console.log('reqBody : '+reqBody);
-    console.log('requestUrl : '+requestUrl)
     try {
       const resp = await fetch(requestUrl, {
         method: 'post',
@@ -54,8 +52,7 @@ const CarteviewAndPayment = () => {
 
 
       if (resp.status < 200 || resp.status >= 300) {
-        console.log("Error Encountered: "+JSON.stringify(data));
-        throw Error("Error Encountered: "+data);
+        console.log("Some error occured  "+JSON.stringify(data));
       }
       
       dispatch(cartActions.setCartStatus({ cartStatus: 'payment-complete' })); setPaymentButtonText();

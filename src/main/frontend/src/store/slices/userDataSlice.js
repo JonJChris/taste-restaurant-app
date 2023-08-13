@@ -10,7 +10,6 @@ const userDataSlice = createSlice({
         userLoggedIn:false},
     reducers: {
         loginUser: (state, action) => {
-            console.log("store: "+JSON.stringify(action.payload));
             state.currentUserId = action.payload.currentUserId;
             state.currentUserName = action.payload.currentUserName;
             state.currentUserFirstName = action.payload.currentUserFirstName

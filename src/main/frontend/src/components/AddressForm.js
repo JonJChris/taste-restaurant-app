@@ -65,8 +65,8 @@ const AddressForm = (props) => {
                     <label className='form-label'>phoneNumber: </label>
                     <input ref={phoneNumberRef} className=' form-control' type='text' name='phoneNumber' required='true' /></div>
                 <div className='row'>
-                    <input type='button' className='col-2 btn btn-primary m-3' value='cancel' name='buttonCancel' onClick={cancelForm} />
-                    <input type='submit' className='m-3 col-2 btn btn-primary' value='submit' name='buttonSubmit' />
+                    <input type='button' className='col btn btn-primary m-3' value='cancel' name='buttonCancel' onClick={cancelForm} />
+                    <input type='submit' className='m-3 col btn btn-primary' value='submit' name='buttonSubmit' />
                 </div>
             </form>
 

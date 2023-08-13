@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate, useOutletContext, useParams, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { actions as cartActions } from './../store/slices/cartSlice'
+import { useParams } from 'react-router-dom';
 import AddressSecton from './AddressSecton';
 
 const AccountOrderDetails = () => {
 
-  const cartStore = useSelector(state => state.cartData);
   const userStore = useSelector(state => state.userData);
   const [order, setOrder] = useState();
-  const context = useOutletContext();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { orderId } = useParams();
 
-console.log(order);
   useEffect(() => {
     const fetchData = async () => {
       const reqUrl = `http://localhost:8080/customers/${userStore.currentUserId}/orders/${orderId}`
@@ -56,20 +49,20 @@ console.log(order);
 
     <div className='container body-content overflow-auto  vh-100'>
 
-    {order && 
-      <div key={order.orderId} className="border bg-white rounded p-3 mb-2">
-        <p className='fw-bold'><label>Order ID : </label>{order.orderId}</p>
-        <span><label className='fw-bold'>Order Date : </label>{order.orderDate}</span><br />
-        <span><label className='fw-bold'>Order Delivery Addreess : </label><br />{order.deliveryAddress.addressLine1},
-          {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city},{order.deliveryAddress.state},
-          {order.deliveryAddress.country}</span><br />
-        <div><label className='fw-bold'>Order Staus : </label><span className={`fw-bold  ${getOrderStatusStyleClass(order.orderStatus)}`}>{order.orderStatus}</span></div>
-      </div>
-      
-      
-    }
+      {order &&
+        <div key={order.orderId} className="border bg-white rounded p-3 mb-2">
+          <p className='fw-bold'><label>Order ID : </label>{order.orderId}</p>
+          <span><label className='fw-bold'>Order Date : </label>{order.orderDate}</span><br />
+          <span><label className='fw-bold'>Order Delivery Addreess : </label><br />{order.deliveryAddress.addressLine1},
+            {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city},{order.deliveryAddress.state},
+            {order.deliveryAddress.country}</span><br />
+          <div><label className='fw-bold'>Order Staus : </label><span className={`fw-bold  ${getOrderStatusStyleClass(order.orderStatus)}`}>{order.orderStatus}</span></div>
+        </div>
 
-     { order && order.orderItems && order.orderItems.map(item => (
+
+      }
+
+      {order && order.orderItems && order.orderItems.map(item => (
         <section key={item.productId} className="border bg-white rounded p-3 mb-2 row">
           <article className='col'>
             <div className='fw-bold'>{item.productName}</div>
@@ -86,40 +79,40 @@ console.log(order);
         </section>
 
       ))
-    
-    }
 
-    {
-      order && order.orderTotalPrice &&
-      <div className='border row mb-3 bg-white rounded row'>
+      }
+
+      {
+        order && order.orderTotalPrice &&
+        <div className='border row mb-3 bg-white rounded row'>
+          <div className='col'>
+            <div className='row'>
+
+              <div className='col offset-8 fw-bold' ><p>Total Price: </p></div>
+              <div className='col-2'>
+                <p className='fw-bold'>$ {order.orderTotalPrice.toFixed(2)}</p>
+              </div>
+            </div>
+          </div></div>
+      }
+
       <div className='col'>
-        <div className='row'>
+        {order && order.deliveryAddress &&
 
-          <div className='col offset-8 fw-bold' ><p>Total Price: </p></div>
-          <div className='col-2'>
-            <p className='fw-bold'>$ {order.orderTotalPrice.toFixed(2)}</p>
-          </div>
-        </div>
-        </div></div>
-    }
+          <section>
+            <div className=''>
+              <AddressSecton borderStyle='border mb-3 p-2 rounded p-1' address={order.deliveryAddress} />
+            </div>
+          </section>
+        }
+      </div>
 
-    <div className='col'>
-      {order && order.deliveryAddress &&
 
-      <section>
-      <div className=''>
-          <AddressSecton borderStyle='border mb-3 p-2 rounded p-1' address = {order.deliveryAddress}/>
-        </div>
-      </section>
-    }
+
     </div>
 
 
 
-</div>
-      
-
-    
   )
 }
 export default AccountOrderDetails;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { actions as cartActions } from '../store/slices/cartSlice'
 import foodPlaceholderImage from './../images/food-image-placeholder.png'
@@ -9,7 +9,6 @@ const MenuContent = (props) => {
   const dispatch = useDispatch();
 
   const addItemToCart = (productId, productPrice, productName) => {
-    console.log(productId);
     dispatch(cartActions.addItemToCart({ productId, productPrice, productName }));
   }
 
@@ -29,21 +28,21 @@ const MenuContent = (props) => {
         {
           cartItems[foodItem.productId] &&
           <span className='row'>
-            <div className='col'> 
-            <div className='row p-2 pb-0'>
-              <button className='btn btn-primary col-1 ' name={foodItem.productId}
-              onClick={() => addItemToCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>+</button>
-  
-  
-            <p className='food-item-count text-primary text-sm col-1'>{cartItems[foodItem.productId].productQuantity}</p>
+            <div className='col'>
+              <div className='row p-2 pb-0'>
+                <button className='btn btn-primary col-1 ' name={foodItem.productId}
+                  onClick={() => addItemToCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>+</button>
 
-          <button className='btn btn-primary col-1'  name={foodItem.productId}
-            onClick={() => removeItemFromCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>-</button>
+
+                <p className='food-item-count text-primary text-sm col-1'>{cartItems[foodItem.productId].productQuantity}</p>
+
+                <button className='btn btn-primary col-1' name={foodItem.productId}
+                  onClick={() => removeItemFromCart(foodItem.productId, foodItem.productPrice, foodItem.productName)}>-</button>
+              </div>
+
+
             </div>
-          
-            
-            </div>
-            
+
           </span>
         }
       </article>
@@ -51,7 +50,7 @@ const MenuContent = (props) => {
   }
 
   return (
-    <div className='container body-content overflow-auto  vh-100'>
+    <div className='container-fluid body-content overflow-auto  vh-100'>
       {
 
         props.foodItemsList && props.foodItemsList.map(item => {
@@ -59,14 +58,14 @@ const MenuContent = (props) => {
             <section key={item.productId} className='row  '>
               <article className='col border rounded bg-white mb-2  pb-2'>
                 <section className='row'>
-                  <article className='col'>
-                    <p className='fw-bold'>{item.productName}</p>
-                    <p>{item.productDescription}</p>
+                  <article className='col-10'>
+                    <div className='fw-bold'>{item.productName}</div>
+                    <div className='fs-6'>{item.productDescription}</div>
                     <p className='food-item-name text-success fw-bold'>${item.productPrice}</p>
                     <GenerateAddToCartButton foodItem={item} />
                   </article>
                   <article className='col'>
-                  <img className='food-thumbnail' src={foodPlaceholderImage} alt='food-placeholder' />
+                    <img className='food-thumbnail' src={foodPlaceholderImage} alt='food-placeholder' />
                   </article>
                 </section>
               </article>

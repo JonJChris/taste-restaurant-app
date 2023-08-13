@@ -5,7 +5,6 @@ const ErrorPage = () => {
 
     const error = useRouteError();
 
-    console.log(error);
   return (
     <div>ErrorPagedfafadsf a</div>
   )
