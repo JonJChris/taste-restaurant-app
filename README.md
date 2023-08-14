@@ -1,4 +1,3 @@
 # taste-restaurant-app
-# Built with Spring boot - React
-Taste restaurant app built with react, spring boot
-
+# Spring boot - React - Redux
+### Deployable in Docker as single unit with H2 in-memory database
