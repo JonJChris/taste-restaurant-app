@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import axios from 'axios';
 import InfoModal from './InfoModal'
 import { useNavigate } from 'react-router-dom'
-
+import {getRequestURL} from './../utils/connectionUtils'
 const MenuLayout = () => {
 
   const dispatch = useDispatch();
@@ -39,15 +39,14 @@ const MenuLayout = () => {
     } else {
       navigate('/')
     }
-    const origin = window.location.origin;
-
-    axios.get(`${origin}/productCategory`)
+    
+    axios.get(`${getRequestURL()}/productCategory`)
       .then(resp => {
         showHideModalContent(false, '');
         dispatch(staticDataActions.refreshFoodCategory({ foodCategory: resp.data }));
       }).catch(error => showHideModalContent(true, "Application not avaialble due to network error"));
 
-    axios.get(`${origin}/products`)
+    axios.get(`${getRequestURL()}/products`)
       .then(resp => {
         showHideModalContent(false, '');
         dispatch(staticDataActions.refreshFoodItemsGroup({ foodItemsGroup: resp.data }));

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { actions as userDataActions } from './../store/slices/userDataSlice'
 import { useNavigate } from 'react-router-dom';
-
+import {getRequestURL} from './../utils/connectionUtils'
 const Login = () => {
 
     const [loginForm, setLoginForm] = useState({ username: "", password: "" });
@@ -20,67 +20,11 @@ const Login = () => {
         });
     }
 
-    const loginCustomer1 = () => {
-        const origin = window.location.origin;
-        const reqUrl = `${origin}/customers/login';`
-        const reqBody = {
-            ...loginForm
-        }
-
-
-        fetch(reqUrl, {
-            method: 'post',
-            body: JSON.stringify(reqBody),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-                if (!res.ok) {
-                    return res.json().then(
-                        text => { 
-                            console.log(text.errorMessage);
-                            setErrMsg(text.errorMessage);
-                            throw new Error(text) 
-                        }
-                    )
-                }
-                else {
-
-
-                    const loginData = res.json();
-
-                    if (loginData) {
-                        console.log('loginData : '+loginData);
-                        const userData = {
-                            currentUserId: loginData.userId,
-                            currentUserName: loginData.username,
-                            currentUserFirstName: loginData.firstName,
-                            currentUserLastName: loginData.lastName,
-                            userLoggedId: true
-                        }
-
-                        dispatch(userDataActions.loginUser(userData));
-                        navigate('/');
-                    }
-                }
-            })
-            .catch(err => {
-                console.log('caught it!' + errMsg, err);
-                console.log('caught it!', err[0]);
-                // setErrorMsg(Object.keys(err));
-                // setErrMsg(JSON.stringify(err));
-            });
-
-    }
-
-
-
-
-
+   
     const loginCustomer = async () => {
-        const origin = window.location.origin;
+
+        const reqUrl = `${getRequestURL()}/customers/login`;
         
-        const reqUrl = `${origin}/customers/login`;
         const reqBody = {
             ...loginForm
         }
@@ -98,12 +42,11 @@ const Login = () => {
 
             if (!resp.ok) {
                 const err =  await resp.json();
-                console.log(err.errorMessage);
                 setErrMsg(err.errorMessage);
                 throw new Error(err) 
             }
 
-           const loginData = await resp.json();
+            loginData = await resp.json();
 
             if (loginData) {
                 setErrMsg('');
@@ -115,7 +58,6 @@ const Login = () => {
                     userLoggedId: true
                 }
 
-                console.log("::: " + loginData);
                 dispatch(userDataActions.loginUser(userData));
                 navigate('/');
             } else {
@@ -123,7 +65,7 @@ const Login = () => {
             }
 
         } catch (error) {
-            console.log('error : ' + error);
+            // console.log('error : ' + error);
         }
 
     }
@@ -140,7 +82,7 @@ const Login = () => {
             <div className='col d-flex justify-content-center align-items-center'>
                 <form className="row rounded border mt-5" onSubmit={handleSubmit}>
 
-                    <h3 className='text-align-center'>Welcome to Taste Restraunt</h3>
+                    <h3 className='text-align-center'>Welcome to Taste Restaurant</h3>
 
                     <div className="col">
                         <div className='mb-3'>
@@ -149,7 +91,7 @@ const Login = () => {
                         </div>
                         <div className='mb-3'>
                             <label className='form-label' htmlFor='username'>Password</label>
-                            <input className='form-control' type='password' name="password" onChange={handleChange} value={loginForm.password} placeholder='Enter your password' required={true} />
+                            <input className='form-control' type='password' name="password" onChange={handleChange} value={loginForm.password} placeholder='Enter your password' required={true} autoComplete='on' />
                         </div>
                         <div className='button-group p-0 text-danger' style={{ minHeight: '30px' }}>
                             <p>{errMsg}</p>

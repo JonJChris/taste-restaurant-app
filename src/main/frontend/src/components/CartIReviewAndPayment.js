@@ -4,7 +4,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { actions as cartActions } from './../store/slices/cartSlice'
 import AddressSecton from './AddressSecton';
-
+import {getRequestURL} from './../utils/connectionUtils'
 
 const CarteviewAndPayment = () => {
   const cartStore = useSelector(state => state.cartData);
@@ -37,8 +37,8 @@ const CarteviewAndPayment = () => {
 
 
     const reqBody = JSON.stringify(requestBody);
-    const origin = window.location.origin;
-    const requestUrl = `${origin}/customers/${userStore.currentUserId}/orders`
+
+    const requestUrl = `${getRequestURL()}/customers/${userStore.currentUserId}/orders`
 
     try {
       const resp = await fetch(requestUrl, {
@@ -71,7 +71,7 @@ const CarteviewAndPayment = () => {
     } else if (cartStore.cartStatus === 'payment-complete') {
       return 'Payment Complete'
     } else {
-      return 'order & Pay'
+      return 'Pay & Order'
     }
   }
 
@@ -96,7 +96,7 @@ const CarteviewAndPayment = () => {
       <div>
 
         {Object.values(cartStore.cartItems) && Object.values(cartStore.cartItems).map(item => (
-          <section className='border row mb-3 bg-white rounded'>
+          <section key={item.productId} className='border row mb-3 bg-white rounded'>
             <article className='col-10'>
               <div className='fw-bold text-dark'>{item.productName}</div>
               <div className='m-2'>

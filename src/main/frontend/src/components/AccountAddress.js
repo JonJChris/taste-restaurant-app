@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import AddressSecton from './AddressSecton';
 import AddressForm from './AddressForm';
+import {getRequestURL} from './../utils/connectionUtils'
 const AccountAddress = () => {
 
   const [addresses, setAddresses] = useState();
@@ -13,9 +14,9 @@ const AccountAddress = () => {
   }
 
   useEffect(() => {
-    const origin = window.location.origin;
 
-    fetch(`${origin}/customers/${userData.currentUserId}/addresses`)
+
+    fetch(`${getRequestURL()}/customers/${userData.currentUserId}/addresses`)
       .then(resp => resp.json())
       .then(addresses => {
         setAddresses(addresses)
@@ -28,8 +29,7 @@ const AccountAddress = () => {
   }, []);
 
   const formSubmitCallback = (formData) => {
-    const origin = window.location.origin;
-    const reqUrl = `${origin}/customers/${userData.currentUserId}/addresses`
+    const reqUrl = `${getRequestURL()}/customers/${userData.currentUserId}/addresses`
     const reqBody = JSON.stringify(formData);
     fetch(reqUrl, {
       method: 'post',

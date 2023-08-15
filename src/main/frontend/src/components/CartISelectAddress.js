@@ -5,6 +5,8 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { actions as cartDataActions } from './../store/slices/cartSlice'
 import AddressSecton from './AddressSecton';
 import AddressForm from './AddressForm';
+import {getRequestURL} from './../utils/connectionUtils'
+
 const CartSelectAddress = () => {
 
   const cart = useSelector(state => state.cartData);
@@ -39,11 +41,10 @@ const CartSelectAddress = () => {
 
   useEffect(() => {
     context.setCurrentCartPage('cart-select-address')
-    const origin = window.location.origin;
     const fetchCustomerAddress = async () => {
       const customerId = userData.currentUserId;
       try {
-        const resp = await axios.get(`${origin}/customers/${customerId}/addresses`);
+        const resp = await axios.get(`${getRequestURL()}/customers/${customerId}/addresses`);
         const customerAddress = await resp.data;
         setAddresses(customerAddress);
 
@@ -65,12 +66,10 @@ const CartSelectAddress = () => {
   }
 
   useEffect(() => {
-    const origin = window.location.origin;
-    fetch(`${origin}/customers/${userData.currentUserId}/addresses`)
+    fetch(`${getRequestURL()}/customers/${userData.currentUserId}/addresses`)
       .then(resp => resp.json())
       .then(addresses => {
-        setAddresses(addresses)
-        console.log(addresses)
+        setAddresses(addresses);
       })
       .catch(error => new Error({
         message: error.response,
@@ -81,9 +80,8 @@ const CartSelectAddress = () => {
 
   const formSubmitCallback = (formData) => {
 
-    const origin = window.location.origin;
-
-    const reqUrl = `${origin}/customers/${userData.currentUserId}/addresses`
+    
+    const reqUrl = `${getRequestURL()}/customers/${userData.currentUserId}/addresses`
     const reqBody = JSON.stringify(formData);
     fetch(reqUrl, {
       method: 'post',
@@ -113,7 +111,7 @@ const CartSelectAddress = () => {
           {
             addresses && addresses.map(item => (
 
-              <section className='row ' style={{ cursor: 'pointer' }} onClick={() => updateAddressSelectionInStore(addresses, item.addressId)}>
+              <section key={item.addressId} className='row ' style={{ cursor: 'pointer' }} onClick={() => updateAddressSelectionInStore(addresses, item.addressId)}>
                 <div className=''>
                   <AddressSecton borderStyle={`border mb-3 p-2 ${cart.addressSelected.addressId === item.addressId ? 'border-success' : ''} rounded p-1`} address={item} />
                 </div>

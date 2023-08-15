@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import AddressSecton from './AddressSecton';
+import {getRequestURL} from './../utils/connectionUtils'
 
 const AccountOrderDetails = () => {
 
@@ -10,9 +11,8 @@ const AccountOrderDetails = () => {
   const { orderId } = useParams();
 
   useEffect(() => {
-    const origin = window.location.origin;
     const fetchData = async () => {
-      const reqUrl = `${origin}/customers/${userStore.currentUserId}/orders/${orderId}`
+      const reqUrl = `${getRequestURL()}/customers/${userStore.currentUserId}/orders/${orderId}`
 
       try {
         const resp = await fetch(reqUrl);
@@ -26,7 +26,7 @@ const AccountOrderDetails = () => {
         setOrder(orderDetail);
 
       } catch (error) {
-        console.log(JSON.stringify(error))
+        // console.log(JSON.stringify(error))
       };
 
 
@@ -55,8 +55,8 @@ const AccountOrderDetails = () => {
           <p className='fw-bold'><label>Order ID : </label>{order.orderId}</p>
           <span><label className='fw-bold'>Order Date : </label>{order.orderDate}</span><br />
           <span><label className='fw-bold'>Order Delivery Addreess : </label><br />{order.deliveryAddress.addressLine1},
-            {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city},{order.deliveryAddress.state},
-            {order.deliveryAddress.country}</span><br />
+            {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city}, {order.deliveryAddress.state}, 
+            {order.deliveryAddress.country}, {order.deliveryAddress.phoneNumber}</span><br />
           <div><label className='fw-bold'>Order Staus : </label><span className={`fw-bold  ${getOrderStatusStyleClass(order.orderStatus)}`}>{order.orderStatus}</span></div>
         </div>
 

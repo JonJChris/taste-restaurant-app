@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import {getRequestURL} from './../utils/connectionUtils'
 const Orders = () => {
 
   const userData = useSelector(state => state.userData)
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const origin = window.location.origin;
-    fetch(`${origin}/customers/${userData.currentUserId}/orders`)
+    fetch(`${getRequestURL()}/customers/${userData.currentUserId}/orders`)
       .then(resp => resp.json())
       .then(orders => {
         setOrders(orders)
@@ -49,8 +48,8 @@ const Orders = () => {
             <p className='fw-bold'><label>Order ID : </label>{order.orderId}</p>
             <span><label className='fw-bold'>Order Date : </label>{order.orderDate}</span><br />
             <span><label className='fw-bold'>Order Delivery Addreess : </label><br />{order.deliveryAddress.addressLine1},
-              {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city},{order.deliveryAddress.state},
-              {order.deliveryAddress.country}</span><br />
+              {order.deliveryAddress.addressLine2}, {order.deliveryAddress.city}, {order.deliveryAddress.state},  
+              {order.deliveryAddress.country}, {order.deliveryAddress.phoneNumber}</span><br />
             <div><label className='fw-bold'>Order Staus : </label><span className={`fw-bold  ${getOrderStatusStyleClass(order.orderStatus)}`}>{order.orderStatus}</span></div>
             <Link to={`/account/orderDetails/${order.orderId}`}>Go to order</Link>
           </div>

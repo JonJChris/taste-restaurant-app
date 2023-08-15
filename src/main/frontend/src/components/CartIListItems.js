@@ -25,7 +25,7 @@ const CartListItems = () => {
       <div>
 
         {Object.values(cart.cartItems) && Object.values(cart.cartItems).map(item => (
-          <div className='border row mb-3 bg-white rounded'>
+          <div  key={item.productId} className='border row mb-3 bg-white rounded'>
             <div className='col-10'>
               <div className=' fw-bold text-dark'>{item.productName}</div>
               <div className=' m-2'>

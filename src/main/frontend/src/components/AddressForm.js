@@ -43,7 +43,7 @@ const AddressForm = (props) => {
 
                 <div className='row'>
                     <label className='form-label'>Address Line 1: </label>
-                    <input ref={addressLine1Ref} className='form-control' type='text' name='addressLine1' required='true' />
+                    <input ref={addressLine1Ref} className='form-control' type='text' name='addressLine1' required={true} />
                 </div>
                 <div className='row'>
                     <label className='form-label'>Address Line 2: </label>
@@ -51,19 +51,19 @@ const AddressForm = (props) => {
                 </div>
                 <div className='row'>
                     <label className='form-label'>City: </label>
-                    <input ref={cityRef} className=' form-control' type='text' name='city' required='true' />
+                    <input ref={cityRef} className=' form-control' type='text' name='city' required={true} />
                 </div>
                 <div className='row'>
                     <label className='form-label'>State: </label>
-                    <input ref={stateRef} className=' form-control' type='text' name='state' required='true' />
+                    <input ref={stateRef} className=' form-control' type='text' name='state'required={true} />
                 </div>
                 <div className='row'>
                     <label className='form-label'>Country: </label>
-                    <input ref={countryRef} className=' form-control' type='text' name='country' required='true' />
+                    <input ref={countryRef} className=' form-control' type='text' name='country' required={true} />
                 </div>
                 <div className='row'>
-                    <label className='form-label'>phoneNumber: </label>
-                    <input ref={phoneNumberRef} className=' form-control' type='text' name='phoneNumber' required='true' /></div>
+                    <label className='form-label'>Phone Number: </label>
+                    <input ref={phoneNumberRef} className=' form-control' type='text' name='phoneNumber' required={true} /></div>
                 <div className='row'>
                     <input type='button' className='col btn btn-primary m-3' value='cancel' name='buttonCancel' onClick={cancelForm} />
                     <input type='submit' className='m-3 col btn btn-primary' value='submit' name='buttonSubmit' />
